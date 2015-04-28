@@ -136,47 +136,100 @@ Análisis comparativo de Tomcat, JBoss y Glassfish} % Subtitle
 %% Inicio del documento
 
 \section{Introducción}
-
-	La sociedad de nuestros días se caracteriza por la obtención, almacenamiento y utilización de la información. Por tanto, los sistemas encargados de la utilización de dicha información causan gran impacto sobre ella. Estos sistemas se desarrollan de forma muy rápida y, al igual que ellos, sus necesidades de capacidades hardware para su correcto funcionamiento.
+	La sociedad de nuestros días se caracteriza por la obtención, almacenamiento y
+	utilización de la información. Por tanto, los sistemas encargados de la utilización
+	de dicha información causan gran impacto sobre ella. Estos sistemas se desarrollan
+	de forma muy rápida y, al igual que ellos, sus necesidades de capacidades hardware
+	para su correcto funcionamiento.
 	
-	Esto se traduce en una necesidad de desarrollo forzado de las plataformas que dan soporte a dichas tecnologías. Y este desarrollo, a su vez, ocasiona problemas que, al solventarlos, dan lugar a nuevas tecnologías. Uno de estos problemas sería el de la comunicación entre sistemas diferentes, ya sea por su sistema operativo, sus capacidades hardware o su adaptabilidad y tolerancia a errores.
+	Esto se traduce en una necesidad de desarrollo forzado de las plataformas que dan
+	soporte a dichas tecnologías. Y este desarrollo, a su vez, ocasiona problemas que,
+	al solventarlos, dan lugar a nuevas tecnologías. Uno de estos problemas sería el de
+	la comunicación entre sistemas diferentes, ya sea por su sistema operativo, sus
+	capacidades hardware o su adaptabilidad y tolerancia a errores.
 	
-	Una de las posibles soluciones a dicho problema(pero no la única) es la utilización de servicios webs. Quizás la mayor de la utilización de servidores web como solución a dicho problema es la posibilidad de interacción entre aplicaciones implementadas entre diferentes sistemas operativos(o el mismo), esto es, la interoperatibilidad que es aprovechada por los sistemas distribuidos. Para favorecer dicha interoperabilidad, se fomenta el desarrollo de estándares y protocolos que definan cómo deben comunicarse los procesos para obtener una colaboración satisfactoria y simplificada, permitiendo así maximizar la eficiencia del servicio.
+	Una de las posibles soluciones a dicho problema(pero no la única) es la utilización
+	de servicios webs. Quizás la mayor de la utilización de servidores web como solución
+	a dicho problema es la posibilidad de interacción entre aplicaciones implementadas
+	entre diferentes sistemas operativos(o el mismo), esto es, la interoperatibilidad que
+	es aprovechada por los sistemas distribuidos. Para favorecer dicha interoperabilidad,
+	se fomenta el desarrollo de estándares y protocolos que definan cómo deben comunicarse
+	los procesos para obtener una colaboración satisfactoria y simplificada, permitiendo
+	así maximizar la eficiencia del servicio.
 	
-	En el desarrollo de servidores webs, se requieren una serie de instrucciones de administración de servidores como puede ser control de seguridad, manejo de transacciones, escabilidad, concurrencia, gestión de complementos desplegados, gestión de peticiones de clientes,\dots que no siempre son fáciles de gestionar por el desarrollador. Aunque el desarrollador sea capaz de administrar adecuadamente el servidor web, éste esfuerzo adicional distrae la atención sobre la lógica de negocio, que debería ser el centro de desarrollo de nuestro servidor web.
+	En el desarrollo de servidores webs, se requieren una serie de instrucciones de
+	administración de servidores como puede ser control de seguridad, manejo de
+	transacciones, escabilidad, concurrencia, gestión de complementos desplegados,
+	gestión de peticiones de clientes,\dots que no siempre son fáciles de gestionar por
+	el desarrollador. Aunque el desarrollador sea capaz de administrar adecuadamente el
+	servidor web, éste esfuerzo adicional distrae la atención sobre la lógica de negocio,
+	que debería ser el centro de desarrollo de nuestro servidor web.
 	
-	Para facilitar el desarrollo de los servidores webs, se desarrollaron plataformas y protocolos que se encargan de dichas labores de mantenimiento de bajo nivel permitiendo centrar las preocupaciones del desarrollador en la lógica de negocio. Ejemplos de estas plataformas serían las plataformas J2EE, Appaserver, .NET, GNUstepWeb, Happstack y Django-cms. Todas estas alternativas se basan en el desarrollo de clientes y servicios webs. En este documento, nos centraremos en la plataforma J2EE aunque también se podría exponer gran variedad de servidores de aplicaciones basados en cualquiera de las otras plataformas.
+	Para facilitar el desarrollo de los servidores webs, se desarrollaron plataformas y
+	protocolos que se encargan de dichas labores de mantenimiento de bajo nivel permitiendo
+	centrar las preocupaciones del desarrollador en la lógica de negocio. Ejemplos de estas
+	plataformas serían las plataformas J2EE, Appaserver, .NET, GNUstepWeb, Happstack y
+	Django-cms. Todas estas alternativas se basan en el desarrollo de clientes y servicios
+	webs. En este documento, nos centraremos en la plataforma J2EE aunque también se podría
+	exponer gran variedad de servidores de aplicaciones basados en cualquiera de las otras
+	plataformas.
 	
-	Dentro de la plataforma J2EE, podemos encontrar un gran abanico de posibilidades para escoger. Entre ellas, destacan Apache Geronimo, Apache TomEE, Glassfish, WildFly(anteriormente conocido como JBoss), WebSphere AS, WebLogic Server y JOnAS application server. Esto ocasiona grandes dudas sobre cuál se habitúa mejor a nuestras necesidades, que se ven ampliadas por la mitificación de las propiedades que dichas aplicaciones poseen.
+	Dentro de la plataforma J2EE, podemos encontrar un gran abanico de posibilidades para
+	escoger. Entre ellas, destacan Apache Geronimo, Apache TomEE, Glassfish, WildFly
+	(anteriormente conocido como JBoss), WebSphere AS, WebLogic Server y JOnAS application
+	server. Esto ocasiona grandes dudas sobre cuál se habitúa mejor a nuestras necesidades,
+	que se ven ampliadas por la mitificación de las propiedades que dichas aplicaciones
+	poseen.
 	
-	En este proyecto, se tratarán de conocer los puntos fuertes y puntos débiles de algunas de las plataformas anteriormente citadas. En concreto, se hará sobre Apache TomEE(la extensión más inmediata del contenedor de servlets Tomcat con los requerimientos de J2EE), Glassfish y WildFly, todas ellas son proyectos de software libre implementados en Java, siguen los estándares definidos por la plataforma J2EE y son multiplataforma.
+	En este proyecto, se tratarán de conocer los puntos fuertes y puntos débiles de algunas
+	de las plataformas anteriormente citadas. En concreto, se hará sobre Apache TomEE(la
+	extensión más inmediata del contenedor de servlets Tomcat con los requerimientos de
+	J2EE), Glassfish y WildFly, todas ellas son proyectos de software libre implementados
+	en Java, siguen los estándares definidos por la plataforma J2EE y son multiplataforma.
 	
 	
 \section{Definiciones previas}
-	Antes de comenzar, conviene dejar claros algunos conceptos importantes que irán apareciendo
-	a lo largo del documento\footnote{Aunque no lo indique explícitamente, estas definiciones
-	son copia, traducción y/o resumen de la página que doy como referencia.}:
+	Antes de comenzar, conviene dejar claros algunos conceptos importantes que irán
+	apareciendo	a lo largo del documento\footnote{Aunque no lo indique explícitamente,
+	estas definiciones son copia, traducción y/o resumen de la página que doy como
+	referencia.}:
 
 	\begin{itemize}
-		\item \textbf{J2EE}(también conocido como \textit{Java Platform, Enterprise Edition} o \textit{Java EE}): es una plataforma de programación de desarrollo y ejecución de aplicaciones Java. Para facilitar dicho desarrollo, dispone de una serie de API's(RMI, JMS,...) así como servlets y JavaService Pages que se encargan de las tareas de mantenimiento de bajo nivel(seguridad, escalabilidad, concurrencia,...) permitiendo al desarrollar centrarse en la lógica de negocio.\cite{J2EE_Def}
+		\item \textbf{J2EE}(también conocido como \textit{Java Platform, Enterprise
+		Edition} o \textit{Java EE}): es una plataforma de programación de desarrollo y
+		ejecución de aplicaciones Java. Para facilitar dicho desarrollo, dispone de una
+		serie de API's(RMI, JMS,...) así como servlets y JavaService Pages que se encargan
+		de las tareas de mantenimiento de bajo nivel(seguridad, escalabilidad,
+		concurrencia,...) permitiendo al desarrollar centrarse en la lógica de negocio.\cite{J2EE_Def}
 		
-		\item \textbf{API}(\textit{Application Programming Interface}): Conjunto de rutinas, protocolos y herramientas para facilitar el desarrollo de aplicaciones software. Ejemplos de API's serían los estándar POSIX o la STL de C++.\cite{API_Def}
+		\item \textbf{API}(\textit{Application Programming Interface}): Conjunto de rutinas,
+		protocolos y herramientas para facilitar el desarrollo de aplicaciones software.
+		Ejemplos de API's serían los estándar POSIX o la STL de C++.\cite{API_Def}
 		
-		\item \textbf{RMI}(\textit{Remote Method Invocation}): API de Java que permite la llamada a métodos de forma remota, lo que permite la comunicación entre servidores basados en Java.\cite{RMI_Def}
+		\item \textbf{RMI}(\textit{Remote Method Invocation}): API de Java que permite la
+		llamada a métodos de forma remota, lo que permite la comunicación entre servidores
+		basados en Java.\cite{RMI_Def}
 		
-		\item \textbf{JMS}(\textit{Java Message Service}): API de Java que permite el envío y la recepción de mensajes entre clientes.\cite{JMS_Def} Puede ser:
+		\item \textbf{JMS}(\textit{Java Message Service}): API de Java que permite el envío
+		y la recepción de mensajes entre clientes.\cite{JMS_Def} Puede ser:
 		\begin{itemize}
 			\item Punto a Punto: un cliente le envía un mensaje a otro.
 			\item Publicar/Suscribir: un cliente envía el mensaje y varios lo reciben.
 		\end{itemize}
 
-		\item \textbf{Servlet}: Programa implementado en Java que se ejecuta en un servidor(usualmente en un servidor web) y que responde a las peticiones de los clientes, extendiendo así las capacidades del servidor.\cite{Servlet_Def}
+		\item \textbf{Servlet}: Programa implementado en Java que se ejecuta en un servidor
+		(usualmente en un servidor web) y que responde a las peticiones de los clientes,
+		extendiendo así las capacidades del servidor.\cite{Servlet_Def}
 		
-		\item \textbf{JSP}(\textit{JavaServer Pages}): Tecnología que crea páginas web generadas dinámicamente.\cite{JSP_Def}
+		\item \textbf{JSP}(\textit{JavaServer Pages}): Tecnología que crea páginas web
+		generadas dinámicamente.\cite{JSP_Def}
 		
-		Para ejecutar JSP en un servidor web compatible se requiere un contenedor de servlet(como Tomcat, del que hablaremos más adelante).
+		Para ejecutar JSP en un servidor web compatible se requiere un contenedor de
+		servlet(como Tomcat, del que hablaremos más adelante).
 		
-		\item \textbf{Lógica de negocio}(\textit{Business Logic}): Parte del programa que se encarga de codificar las reglas del negocio del mundo real sobre cómo se crea, muestra, almacena y cambia la información.\cite{BL_Def}
+		\item \textbf{Lógica de negocio}(\textit{Business Logic}): Parte del programa
+		que se encarga de codificar las reglas del negocio del mundo real sobre cómo
+		se crea, muestra, almacena y cambia la información.\cite{BL_Def}
 		
 	\end{itemize}
 
