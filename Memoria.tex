@@ -139,6 +139,35 @@ Análisis comparativo de Tomcat, JBoss y Glassfish} % Subtitle
 
 
 \section{Definiciones previas}
+	Antes de comenzar, conviene dejar claros algunos conceptos importantes que irán apareciendo
+	a lo largo del documento\footnote{Aunque no lo indique explícitamente, estas definiciones
+	son copia, traducción y/o resumen de la página que doy como referencia.}:
+
+	\begin{itemize}
+		\item \textbf{J2EE}(también conocido como \textit{Java Platform, Enterprise Edition} o \textit{Java EE}): es una plataforma de programación de desarrollo y ejecución de aplicaciones Java. Para facilitar dicho desarrollo, dispone de una serie de API's(RMI, JMS,...) así como servlets y JavaService Pages que se encargan de las tareas de mantenimiento de bajo nivel(seguridad, escalabilidad, concurrencia,...) permitiendo al desarrollar centrarse en la lógica de negocio.\cite{J2EE_Def}
+		
+		\item \textbf{API}(\textit{Application Programming Interface}): Conjunto de rutinas, protocolos y herramientas para facilitar el desarrollo de aplicaciones software. Ejemplos de API's serían los estándar POSIX o la STL de C++.\cite{API_Def}
+		
+		\item \textbf{RMI}(\textit{Remote Method Invocation}): API de Java que permite la llamada a métodos de forma remota, lo que permite la comunicación entre servidores basados en Java. \cite{RMI_Def}
+		
+		\item \textbf{JMS}(\textit{Java Message Service}): API de Java que permite el envío y la recepción de mensajes entre clientes. Puede ser:
+		\begin{itemize}
+			\item Punto a Punto: un cliente le envía un mensaje a otro.
+			\item Publicar/Suscribir: un cliente envía el mensaje y varios lo reciben.
+		\end{itemize}
+		\cite{JMS_Def}
+
+		\item \textbf{Servlet}: Programa implementado en Java que se ejecuta en un servidor(usualmente en un servidor web) y que responde a las peticiones de los clientes, extendiendo así las capacidades del servidor.\cite{Servlet_Def}
+		
+		\item \textbf{JSP}(\textit{JavaServer Pages}): Tecnología que crea páginas web generadas dinámicamente.\cite{JSP_Def}
+		
+		Para ejecutar JSP en un servidor web compatible se requiere un contenedor de servlet(como Tomcat, del que hablaremos más adelante).
+		
+		\item \textbf{Lógica de negocio}(\textit{Business Logic}): Parte del programa que se encarga de codificar las reglas del negocio del mundo real sobre cómo se crea, muestra, almacena y cambia la información.\cite{BL_Def}
+		
+	\end{itemize}
+
+
 
 \section{Tomcat}
 
@@ -150,6 +179,43 @@ Análisis comparativo de Tomcat, JBoss y Glassfish} % Subtitle
 \section{Glassfish}
 
 \section{Perspectivas futuras}
+
+\newpage
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{J2EE_Def}
+Java Platform, Enterprise Edition. Wikipedia, the free encyclopedia.\\
+	\url{https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition}
+
+\bibitem{API_Def}
+Application Programming Interface. Wikipedia, the free encyclopedia.\\
+	\url{https://en.wikipedia.org/wiki/Application_programming_interface}
+
+\bibitem{RMI_Def}
+Java Remote Method Invocation. Wikipedia, the free encyclopedia.\\
+	\url{https://en.wikipedia.org/wiki/Java_remote_method_invocation}
+
+\bibitem{JMS_Def}
+Java Message Service. Wikipedia, the free encyclopedia.\\
+	\url{https://en.wikipedia.org/wiki/Java_Message_Service}
+
+\bibitem{Servlet_Def}
+ORACLE Help Center.\\
+	\url{http://docs.oracle.com/javaee/6/api/javax/servlet/Servlet.html}
+
+\bibitem{JSP_Def}
+JavaServer Pages. Wikipedia, the free encyclopedia.\\
+	\url{https://en.wikipedia.org/wiki/JavaServer_Pages}
+
+\bibitem{BL_Def}
+Business Logic. Wikipedia, the free encyclopedia.\\
+	\url{https://en.wikipedia.org/wiki/Business_logic}
+\end{thebibliography}
 
 
 \end{document}
