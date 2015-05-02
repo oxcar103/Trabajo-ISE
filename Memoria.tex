@@ -340,6 +340,55 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 		para iniciarlo, pararlo o reiniciarlo, respectivamente.
 
 \section{Comparación de resultados}
+	La realización de esta comparativa está inspirada en las tesis de:
+		\begin{itemize}
+			\item John Jairo Mendez Romero\cite{JJMR_Tesis}, de la cuál tomé el código de
+			ejecución en los servidores de aplicaciones.
+			
+			\item Diego Paul Tamayo Barriga\cite{DPTB_Tesis}, de ella surgió la idea de utilizar
+			las herramientas de benchmarking: \textit{ab} y \textit{sar}. Aunque él no llega a
+			utilizar el comando \textit{ab} pero sí lo presenta y da una referencia que me
+			permitió investigarlo y utilizarlo.
+		\end{itemize}
+
+	Para realizar la medición de resultados de los diferentes servidores de aplicaciones(de haber
+	sido posible su instalación de manera exitosa), se iba a utilizar 4 máquinas virtuales para
+	interpretar los roles de cliente y cada uno de los servidores.
+	
+	En cada máquina servidor, se configura la aplicación correspondiente de entre nuestras 3 
+	candidatas: Tomcat, WildFly y GlassFish. Una vez configuradas con algún código de ejecución
+	simple, se procede a pausar dos de las máquinas servidoras para que no afecten a la ejecución
+	y medición de la tercera.
+	
+	Desde la máquina cliente, hacemos una petición al servidor web activo haciendo uso del comando
+	\textit{ab} del paquete \textit{apache2-utils} que, tal como se nos indica en su página
+	oficial\cite{AB_official}, es una herramienta de benchmarking de servidores HTTP. Como podemos
+	 ver en la misma página, le podemos pasar una serie de parámetros a dicho comando.
+	
+	Para esta prueba, se utilizarán los parámetros:
+	\begin{itemize}
+		\item \textit{-b} con valor variando entre 1 y 1000000. En concreto, se usarán 1, 1000 y 100000.
+		\item \textit{-c} con valores 1(por defecto), 2 y 5.
+		\item \textit{-n} con valores 10 y 100.
+	\end{itemize}
+	
+	Esto supone un total de 18 ejecuciones por cada servidor, haciendo un total de 54.
+	
+	Tras cada ejecución del comando \textit{ab} con sus correspondientes parámetros, se ejecutarán
+	en la máquina virtual servidor sobre la que se ha ejecutado otro comando de benchmarking llamado
+	\textit{sar} del paquete \textit{sysstat}. Dicho comando permite una serie de comandos que nos
+	permiten conocer diferentes aspectos sobre los que usar benchmarking como podemos ver en su página
+	oficial\cite{SAR_official}.
+	
+	Para esta prueba, se utilizarán los parámetros:
+	\begin{itemize}
+		\item \textit{-r} que muestra el estado de utilización de la memoria RAM.
+		\item \textit{-u} que muestra el estado de utilización de la CPU.
+	\end{itemize}
+	
+	Después, realizaríamos un estudio de los datos del cuál se sacaría qué aplicación nos produce
+	una productividad más rápida a menor consumo de CPU y RAM. También podríamos ver qué aplicación
+	es más adecuada para un servidor que dé más importancia a la CPU que a la RAM o viceversa.
 
 \section{Perspectivas futuras}
 	Para futuros trabajos, se podría comparar dichos servidores de aplicaciones con otras herramientas
@@ -453,6 +502,29 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	Sec. "1. Getting Started with GlassFish"\\
 		\url{http://proquest.safaribooksonline.com/book/programming/java/9781782176886}
 		
+	\bibitem{JJMR_Tesis}
+	\textbf{\textit{Análisis comparativo de las plataformas J2EE y .NET aplicado
+	al desarrollo de servicios web}}\\
+	John Jairo Mendez Romero\\
+	Universidad de Pamplona-Colombia(Nov. 2008)\\
+		\url{http://www.j2ee-vs-net.blogspot.com.es/}
+	
+	\bibitem{DPTB_Tesis}
+	\textbf{\textit{Análisis comparativo de los servidores GlassFish y JBoss para
+	la plataforma JavaEE aplicado al módulo de catálogos del sistema de Recursos
+	Humanos de la ESPOCH}}\\
+	Diego Paul Tamayo Barriga\\
+	Escuela Superior Politécnica de Chimborazo-Ecuador(2014)\\
+		\url{http://dspace.espoch.edu.ec/bitstream/123456789/3328/1/18T00551.pdf}
+
+	\bibitem{AB_official}
+	\textbf{Apache Docs}\\
+		\url{http://httpd.apache.org/docs/2.2/programs/ab.html}
+	
+	
+	\bibitem{SAR_official}
+	\textbf{Welcome to the SYSSTAT Utilities Home Page!}\\
+		\url{http://sebastien.godard.pagesperso-orange.fr/man_sar.html}
 \end{thebibliography}
 
 \end{document}
