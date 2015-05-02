@@ -238,6 +238,7 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 		\item \textbf{Lógica de negocio}(\textit{Business Logic}): Parte del programa
 		que se encarga de codificar las reglas del negocio del mundo real sobre cómo
 		se crea, muestra, almacena y cambia la información.\cite{BL_Def}
+
 	\end{itemize}
 
 \section{Tomcat}
@@ -290,6 +291,24 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	nombre(\textit{WildFly}) fue anunciado en la conferencia Devoxx 2013.\cite{WF_install}\cite{WF_name}
 
 	\subsection{Instalación y control básico del servicio(\textit{start, stop y restart})}
+		Para realizar la instalación del WildFly, nos basamos en las instrucciones detalladas
+		en \cite{WF_install}, la instalación se realiza de manera correcta pero al intentar
+		ejecutar el script \textit{standalone.sh}, nos produce una serie de errores(como
+		podemos ver en la figura \ref{fig:WF_Fail}) que nos impiden dar comienzo al
+		servicio\footnote{Como se detalla en \cite{WF_install}, hay otro modo para inicializar
+		el servicio, ejecutando \textit{domain.sh} pero igualmente genera una serie de errores
+		similares a la ejecución de \textit{standalone.sh}}.
+
+		\begin{figure}[h!]
+			\includegraphics[width=15cm]{Fail_WF.png}
+			\caption{Error al iniciar el servicio de WildFly.}
+			\label{fig:WF_Fail}
+		\end{figure}
+
+		Suponiendo que hubiésemos solucionado este error, una vez seguido las instrucciones de
+		\cite{WF_install}, para iniciar o apagar el servicio, disponemos de \textit{service
+		wildfly start} para iniciar y \textit{service wildfly stop} para apagarlo(a diferencia
+		de Tomcat, para el cuál tuvimos que crear los alias).
 
 \section{GlassFish}
 
@@ -303,6 +322,22 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	desarrolladores de Oracle.
 
 	\subsection{Instalación y control básico del servicio(\textit{start, stop y restart})}
+		Para realizar la instalación del servicio, nos basamos en las instrucciones detalladas
+		en \cite{GF_install}, la instalación se realiza de forma exitosa pero como podemos ver
+		en la figura \ref{fig:GF_Fail}, cuando intentamos dar comienzo al servicio, nos produce
+		un error que no he logrado subsanar haciendo, por tanto, imposible la comparativa de los
+		servicios.
+
+		\begin{figure}[h!]
+			\includegraphics[width=15cm]{Fail_GF.png}
+			\caption{Error al iniciar el servicio de GlassFish.}
+			\label{fig:GF_Fail}
+		\end{figure}
+
+		Suponiendo que hubiésemos solucionado este error, en GlassFish usaremos el comando
+		\textit{asadmin} con los parámetros \textit{start-domain}, \textit{stop-domain} o
+		\textit{restart-domain} seguidos del nombre de algún dominio creado previamente
+		para iniciarlo, pararlo o reiniciarlo, respectivamente.
 
 \section{Comparación de resultados}
 
