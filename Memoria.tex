@@ -123,6 +123,29 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 % Resumen (Descomentar para usarlo)
 \renewcommand{\abstractname}{Resumen} % Uncomment to change the name of the abstract to something else
 \begin{abstract}
+	 En este documento, realizaremos un análisis comparativo de tres aplicaciones
+	 de software libre, multiplataforma y escritas en Java utilizadas comúnmente
+	 como base de servidores webs aunque no son exclusivos de éstos.
+	 
+	 Para ello, previamente aprenderemos una serie de conceptos básicos para el
+	 entendimiento del resto del documento, por ejemplo, J2EE.
+	 
+	 Después, veremos una pequeña descripción de los 3 programas que compararemos
+	 más adelante, así como una pequeña guía de inicio de servicio para cada uno
+	 de ellos:
+	 
+	 \begin{itemize}
+	 	\item El contenerdor de servlets y JSP's Apache Tomcat(y su extensión a 
+	 	servidor de aplicaciones Apache TomEE).
+	 	\item El servidor de aplicaciones WildFly.
+	 	\item El servidor de aplicaciones GlassFish.
+	 \end{itemize}
+	 
+	 Una vez presentados e instalados los programas, toca planear el experimento,
+	 exponerlo, realizarlo, mostrar los resultados e interpretarlos.
+	 
+	 Para finalizar, se proponen una serie de posibles estudios que se pueden
+	 realizar en el mismo campo de estudio de este documento.
 \end{abstract}
 
 % Índice (Descomentar para usarlo)
@@ -269,9 +292,14 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	
 	\subsection{Instalación y control básico del servicio(\textit{start, stop y restart})}
 		Para el proceso de instalación del servicio, nos basamos en las indicaciones dadas en
-		\cite{TC_install}, la instalación acaba satisfactoriamente y para la inicialización del
-		servicio nos basamos en \cite{TC_install} y \cite{TC_config}, para iniciar el servicio
-		ejecutamos el script \textit{startup.sh} y para pararlo, \textit{shutdown.sh}.
+		\cite{TC_install}.
+		
+		Nos descargamos de \cite{TC_download} el archivo .zip correspondiente y lo descomprimimos
+		donde queramos instalar Tomcat. La instalación acaba satisfactoriamente.
+		
+		Para la inicialización del servicio, nos basamos en \cite{TC_install} y \cite{TC_config},
+		para iniciar el servicio ejecutamos el script \textit{startup.sh} y para pararlo,
+		\textit{shutdown.sh}.
 		
 		Tras seguir los pasos, hemos inicializado el servicio como se comprueba en la figura
 		\ref{fig:TC_Success}:
@@ -284,29 +312,37 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 
 		Para facilitar estos pasos y poder iniciar, apagar y reiniciar el servicio desde cualquier
 		parte sin necesidad de introducir la dirección a los script cada vez que los queramos usar,
-		podemos valernos de \textit{alias}, por ejemplo, \textit{TCstart} para llamar a \textit{
-		startup.sh}, \textit{TCstop} para llamar a \textit{shutdown.sh} y \textit{TCrestart} para
-		ejecutar \textit{TCstop \&\& TCstart}.
+		podemos valernos de \textit{alias}.
+		
+		Por ejemplo, \textit{TCstart} para llamar a \textit{startup.sh}, \textit{TCstop} para llamar
+		a \textit{shutdown.sh} y \textit{TCrestart} para ejecutar \textit{TCstop \&\& TCstart}.
 	
 \section{WildFly}
-	En la página oficial de JBoss\cite{JB_official}, se nos describe como un servidor de aplicaciones
+	En la página oficial de JBoss\cite{WF_official}, se nos describe como un servidor de aplicaciones
 	implementado en Java en código abierto y desarrollado por \textbf{Redhat} bajo la licencia
 	\textit{GNU Lesser General Public License(LGPL)}, version 2.1.
 	
 	Comenzó en manos de Marc Fleury, otro empleado de \textit{Sun Microsystems} y posteriormente fue
 	comprada por la compañía \textbf{RedHat}.
 
-	Posteriormente, JBoss fue renombrado por votación popular\cite{JB_vote}\cite{WF_install} y su nuevo
+	Posteriormente, JBoss fue renombrado por votación popular\cite{WF_vote}\cite{WF_install} y su nuevo
 	nombre(\textit{WildFly}) fue anunciado en la conferencia Devoxx 2013.\cite{WF_install}\cite{WF_name}
 
 	\subsection{Instalación y control básico del servicio(\textit{start, stop y restart})}
 		Para realizar la instalación del WildFly, nos basamos en las instrucciones detalladas
-		en \cite{WF_install}, la instalación se realiza de manera correcta pero al intentar
-		ejecutar el script \textit{standalone.sh}, nos produce una serie de errores(como
-		podemos ver en la figura \ref{fig:WF_Fail}) que nos impiden dar comienzo al
-		servicio\footnote{Como se detalla en \cite{WF_install}, hay otro modo para inicializar
-		el servicio, ejecutando \textit{domain.sh} pero igualmente genera una serie de errores
-		similares a la ejecución de \textit{standalone.sh}}.
+		en \cite{WF_install}.
+		
+		Tras haber descargado el archivo adecuado de \cite{WF_download}, descomprimimos el archivo
+		en la carpeta deseada.
+		
+		Ahora, para inciar el servicio, bastaría con ejecutar el script \textit{standalone.sh}
+		o el script \textit{domain.sh}.
+		
+		La instalación se realiza de una manera correcta pero al intentar ejecutar el servicio,
+		se produce una serie de errores(como podemos ver en la figura \ref{fig:WF_Fail}) que nos
+		impiden dar comienzo al servicio\footnote{Como se detalla en \cite{WF_install}, hay otro
+		modo para inicializar el servicio, ejecutando \textit{domain.sh} pero igualmente genera
+		una serie de errores similares a la ejecución de \textit{standalone.sh}}.
 
 		\begin{figure}[h!]
 			\includegraphics[width=15cm]{Fail_WF.png}
@@ -332,9 +368,17 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 
 	\subsection{Instalación y control básico del servicio(\textit{start, stop y restart})}
 		Para realizar la instalación del servicio, nos basamos en las instrucciones detalladas
-		en \cite{GF_install}, la instalación se realiza de forma exitosa pero como podemos ver
-		en la figura \ref{fig:GF_Fail}, cuando intentamos dar comienzo al servicio, nos produce
-		un error que no he logrado subsanar haciendo, por tanto, imposible la comparativa de los
+		en \cite{GF_install}.
+		
+		Una vez descargado el archivo comprimido, selecionamos la carpeta donde queremos ubicar
+		el programa y lo descomprimimos.
+		
+		Acabada la instalación, basta con dar comienzo con el comando \textbf{asadmin} a un
+		dominio para empezar a funcionar(análogamente, se procedería para apagar el servicio).
+		
+		En este proceso, la instalación se realizó de forma exitosa pero como podemos ver en la
+		figura \ref{fig:GF_Fail}, cuando intentamos dar comienzo al servicio, nos produce un
+		error que no he logrado subsanar haciendo, por tanto, imposible la comparativa de los
 		servicios.
 
 		\begin{figure}[h!]
@@ -480,6 +524,10 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	Sec. "1. Installation of Tomcat7"\\
 		\url{http://proquest.safaribooksonline.com/book/operating-systems-and-server-administration/apache/9781849516624}
 	
+	\bibitem{TC_download}
+	\textbf{Apache Tomcat}\\
+		\url{http://tomcat.apache.org/download-70.cgi}
+
 	\bibitem{TC_config}
 	\textbf{\textit{Tomcat The Definitive Guide}}\\
 	Jason Bittain \& Ian F. Darwin\\
@@ -487,12 +535,12 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	Sec. "1. Getting Started with Tomcat"\\
 		\url{http://proquest.safaribooksonline.com/book/programming/java/0596003188}
 	
-	\bibitem{JB_official}
+	\bibitem{WF_official}
 	\textbf{JBossDeveloper}\\
 		\url{http://jbossas.jboss.org/}\\
 		\url{http://wildfly.org/}
 	
-	\bibitem{JB_vote}
+	\bibitem{WF_vote}
 	\textbf{JBossDeveloper}\\
 		\url{http://jbossas.jboss.org/rename/vote}
 	
@@ -502,6 +550,10 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	Ed. Packt Publishing (May 2014)\\
 	Sec. "1. Starting with WildFly"\\
 		\url{http://proquest.safaribooksonline.com/9781783285891?uicode=goliat} 
+
+	\bibitem{WF_download}
+	\textbf{JBossDeveloper}\\
+		\url{http://wildfly.org/downloads/}
 	
 	\bibitem{WF_name}
 	\textbf{Slideshare.net}\\
@@ -519,6 +571,10 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	Sec. "1. Getting Started with GlassFish"\\
 		\url{http://proquest.safaribooksonline.com/book/programming/java/9781782176886}
 		
+	\bibitem{GF_download}
+	\textbf{GlassFish}\\
+		\url{https://glassfish.java.net/download.html}
+	
 	\bibitem{JJMR_Tesis}
 	\textbf{\textit{Análisis comparativo de las plataformas J2EE y .NET aplicado
 	al desarrollo de servicios web}}\\
