@@ -1,0 +1,144 @@
+%%
+% Plantilla de Presentación
+% Modificación de una plantilla de Latex de LaTeXTemplates para adaptarla 
+% al castellano y a las necesidades de escribir informática y matemáticas.
+%
+% Editada por: Mario Román
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PAQUETES Y CONFIGURACIÓN DEL DOCUMENTO
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, aspectratio=169]{beamer} % Beamer
+\usepackage[spanish]{babel} % Traducciones
+\usepackage[utf8]{inputenc} % Uso de caracteres UTF-8
+\usepackage[T1]{fontenc} % Permite copiar código y evita errores
+\uselanguage{Spanish} % Traducciones beamer
+\languagepath{Spanish} % (tex.stackexchange.com/questions/168208)
+\usepackage{pgfpages} % Beamer User Guide sections 19.6 and 22
+\usepackage[absolute,overlay]{textpos} % Especifica posición del texto.
+
+%% Temas %%
+% Tema y tema de color
+\usetheme{Dresden}
+\usecolortheme{dolphin}
+
+% Fuentes de tamaño arbitrario
+\usepackage{lmodern}
+
+% Gráficos
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TÍTULO
+%----------------------------------------------------------------------------------------
+
+%% Título y otros %%
+\title[Análisis de TC, WF y GF]{Análisis comparativo de los servidores de aplicaciones
+Apache Tomcat, WildFly y GlassFish} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author[Óscar Bermúdez]{
+	Óscar Bermúdez\\	
+	\href{http://www.github.com/oxcar103}{@oxcar103}
+} % Your name
+
+\institute[UGR] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+  Universidad de Granada \\ % Your institution for the title page
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+% Diapositiva de título.
+\begin{frame}
+	\titlepage % Print the title page as the first slide
+\end{frame}
+
+% Diapositiva de contenidos.
+% Throughout your presentation, if you choose to use \section{} and \subsection{} commands, 
+% these will automatically be printed on this slide as an overview of your presentation
+\begin{frame}
+  \frametitle{Contenidos} % Table of contents slide, comment this block out to remove it
+  \tableofcontents
+\end{frame}
+
+
+
+%----------------------------------------------------------------------------------------
+%	PRESENTACIÓN
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+
+\section{Presentación de los programas}
+	\subsection{Apache Tomcat}
+		\begin{frame}
+			\frametitle{Apache Tomcat}
+			
+			\begin{figure}
+				\includegraphics[width=3cm]{Tomcat_logo.jpg}
+			\end{figure} 
+		\end{frame}
+	
+	\subsection{WildFly}
+		\begin{frame}
+			\frametitle{WildFly}
+			
+			\begin{figure}
+				\includegraphics[width=3cm]{WildFly_logo.jpg}
+			\end{figure} 
+		\end{frame}
+	
+	\subsection{GlassFish}
+		\begin{frame}
+			\frametitle{GlassFish}
+			
+			\begin{figure}
+				\includegraphics[width=3cm]{GlassFish_logo.jpg}
+			\end{figure}
+		\end{frame}
+
+\section{Referencias}
+	% Bibliografía
+	\begin{frame}[allowframebreaks]
+		\frametitle{Referencias}
+		Para la realización de estas diapositivas, se ha utilizado como manual el
+		repositorio de GitHub:
+		
+		\footnotesize{
+		  \begin{thebibliography}{7} % Beamer does not support BibTeX so references must be inserted manually as below
+		    \bibitem[Pbaeyens]{} Pablo Baeyens
+		      \newblock Guía de uso de beamer
+		      \newblock \url{https://github.com/dgiim/beamer}
+		  \end{thebibliography}
+		}
+	\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\Huge{\centerline{Fin.}}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
