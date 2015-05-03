@@ -373,8 +373,8 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 		Una vez descargado el archivo comprimido, selecionamos la carpeta donde queremos ubicar
 		el programa y lo descomprimimos.
 		
-		Acabada la instalación, basta con dar comienzo con el comando \textbf{asadmin} a un
-		dominio para empezar a funcionar(análogamente, se procedería para apagar el servicio).
+		Acabada la instalación, basta con dar comienzo con el comando asadmin a un dominio para
+		empezar a funcionar(análogamente, se procedería para apagar el servicio).
 		
 		En este proceso, la instalación se realizó de forma exitosa pero como podemos ver en la
 		figura \ref{fig:GF_Fail}, cuando intentamos dar comienzo al servicio, nos produce un
@@ -420,17 +420,22 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	
 	Para esta prueba, se utilizarán los parámetros:
 	\begin{itemize}
-		\item \textit{-b} con valor variando entre 1 y 1000000. En concreto, se usarán 1, 1000 y 100000.
-		\item \textit{-c} con valores 1(por defecto), 2 y 5.
-		\item \textit{-n} con valores 10 y 100.
+		\item \textit{-b} que ajusta el tamaño del buffer de envío/recepción TCP. Le daremos un rango
+		de valores variando entre 1 y 100(En concreto, se usarán 1, 10 y 100).
+		\item \textit{-c} que determina cuántas peticiones se pueden lanzar a la vez. Para este parámetro,
+		usaremos los valores 1(por defecto), 2 y 5.
+		\item \textit{-n} que determina cuántas peticiones al servidor se realizarán. En este proyecto,
+		le daremos los valores 10, 50 y 100.
 	\end{itemize}
 	
-	Esto supone un total de 18 ejecuciones por cada servidor, haciendo un total de 54.
+	Esto supone un total de 27 ejecuciones por cada servidor, haciendo un total de 81.
 	
 	Tras cada ejecución del comando \textit{ab} con sus correspondientes parámetros, se ejecutarán
 	en la máquina virtual servidor sobre la que se ha ejecutado otro comando de benchmarking llamado
-	\textit{sar} del paquete \textit{sysstat}. Dicho comando permite una serie de comandos que nos
-	permiten conocer diferentes aspectos sobre los que usar benchmarking como podemos ver en su página
+	\textit{sar} del paquete \textit{sysstat}.
+	
+	Dicho comando permite una serie de comandos que nos
+	permiten conocer diferentes aspectos sobre los que usar benchmarking, como podemos ver en su página
 	oficial\cite{SAR_official}.
 	
 	Para esta prueba, se utilizarán los parámetros:
@@ -551,14 +556,14 @@ Análisis comparativo de Tomcat, JBoss y GlassFish} % Subtitle
 	Sec. "1. Starting with WildFly"\\
 		\url{http://proquest.safaribooksonline.com/9781783285891?uicode=goliat} 
 
-	\bibitem{WF_download}
-	\textbf{JBossDeveloper}\\
-		\url{http://wildfly.org/downloads/}
-	
 	\bibitem{WF_name}
 	\textbf{Slideshare.net}\\
 	Dimitris Andreadis-Senior Engineering Manager, JBoss EAP / WildFly at Red Hat.\\
 		\url{http://es.slideshare.net/dandreadis/2013-11devoxxwild-flybof}
+
+	\bibitem{WF_download}
+	\textbf{JBossDeveloper}\\
+		\url{http://wildfly.org/downloads/}
 	
 	\bibitem{GF_official}
 	\textbf{GlassFish}\\
