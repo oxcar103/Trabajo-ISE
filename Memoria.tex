@@ -79,6 +79,8 @@
 \renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
 \renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
 
+%% Para incluir archivos en texto plano
+\usepackage{listings}
 
 
 %----------------------------------------------------------------------------------------
@@ -177,7 +179,7 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	de servicios webs. Quizás la mayor ventaja de la utilización de servidores web como
 	solución a dicho problema es la posibilidad de interacción entre aplicaciones
 	implementadas en diferentes sistemas operativos(o el mismo), esto es, la
-	interoperatibilidad, que es aprovechada por los sistemas distribuidos.
+	interoperabilidad, que es aprovechada por los sistemas distribuidos.
 	
 	Para favorecer dicha interoperabilidad, se fomenta el desarrollo de estándares y
 	protocolos que definan cómo deben comunicarse los procesos para obtener una
@@ -189,7 +191,7 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	transacciones, escabilidad, concurrencia, gestión de complementos desplegados,
 	gestión de peticiones de clientes,\dots que no siempre son fáciles de gestionar por
 	el desarrollador. Aunque el desarrollador sea capaz de administrar adecuadamente el
-	servidor web, éste esfuerzo adicional distrae la atención sobre la lógica de negocio,
+	servidor web, este esfuerzo adicional distrae la atención sobre la lógica de negocio,
 	que debería ser el centro de desarrollo de nuestro servidor web.
 	
 	Para facilitar el desarrollo de los servidores webs, se desarrollaron plataformas y
@@ -213,7 +215,7 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	
 	En este proyecto, se tratarán de conocer los puntos fuertes y puntos débiles de algunas
 	de las plataformas anteriormente citadas. En concreto, se hará sobre Apache Tomcat(aunque
-	éste no es un servidor de aplicaciones propiamente dicho como los otros, si no más bien
+	éste no es un servidor de aplicaciones propiamente dicho como los otros, sino más bien
 	es sólo un contenedor de servlets y JSP's), WildFly y GlassFish.
 	
 	Todos ellos son proyectos de software libre implementados en Java que siguen los
@@ -297,12 +299,21 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 		Nos descargamos de \cite{TC_download} el archivo .zip correspondiente y lo descomprimimos
 		donde queramos instalar Tomcat. La instalación acaba satisfactoriamente.
 		
+		Como ejecutaremos en una misma máquina virtual los 3 candidatos, realizaremos los pasos
+		indicados en \cite{TC_StackOverFlow}(que quizás no sea un sitio web oficial pero he comprobado
+		empíricamente que dicha solución es válida) para reubicar el puerto de la página http del
+		puerto $"$8080$"$ al $"$18080$"$\footnote{Nótese también que al usarse un puerto superior a
+		$"$1023$"$, obligatoriamente en el archivo /etc/default/tomcat7 hay que descomentar la opción
+		$"$AUTHBIND$"$ y ponerla a $"$yes$"$.}.
+		
 		Para la inicialización del servicio, nos basamos en \cite{TC_install} y \cite{TC_config},
 		para iniciar el servicio ejecutamos el script \textit{startup.sh} y para pararlo,
 		\textit{shutdown.sh}.
 		
 		Tras seguir los pasos, hemos inicializado el servicio como se comprueba en la figura
-		\ref{fig:TC_Success}:
+		\ref{fig:TC_Success}\footnote{Nótese que la máquina virtual servidor tiene como dirección IP
+		la introducida en la imagen}\footnote{Nótese que los comandos \textit{w3m <dirección web> |
+		more} permiten imprimir el resultado de la página web en la terminal}:
 		
 		\begin{figure}[h!]
 			\includegraphics[width=15cm]{Success_TC.png}
@@ -339,21 +350,37 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 		o el script \textit{domain.sh}.
 		
 		La instalación se realiza de una manera correcta pero al intentar ejecutar el servicio,
-		se produce una serie de errores(como podemos ver en la figura \ref{fig:WF_Fail}) que nos
-		impiden dar comienzo al servicio\footnote{Como se detalla en \cite{WF_install}, hay otro
-		modo para inicializar el servicio, ejecutando \textit{domain.sh} pero igualmente genera
-		una serie de errores similares a la ejecución de \textit{standalone.sh}}.
+		se produce una serie de errores que nos impiden dar comienzo al servicio\footnote{Como
+		se detalla en \cite{WF_install}, hay otro modo para inicializar el servicio, ejecutando
+		\textit{domain.sh} pero igualmente genera una serie de errores similares a la ejecución
+		de \textit{standalone.sh}}.
 
-		\begin{figure}[h!]
-			\includegraphics[width=15cm]{Fail_WF.png}
-			\caption{Error al iniciar el servicio de WildFly.}
-			\label{fig:WF_Fail}
-		\end{figure}
+		Para solucionarlo, recurrí a un script proporcionado por una página no oficial \cite{WF_solution}(a
+		pesar de no ser oficial, como he podido comprobar que su solución es eficaz, la incluyo como
+		referencia) que, directamente descarga un archivo comprimido; posteriormente, lo descomprime e
+		instala en la correspondiente carpeta \textit{/opt}; lo configura, modificando así las líneas del
+		archivo \textit{standalone.xml} que permite cambiar el puerto por el cual se ofrece el servicio y
+		añade el usuario $"$wildfly$"$ automáticamente y activa el servicio.
+		
+		Al principio, no lograba conectar con la página http que proporcionaba pero inspeccionando
+		en el script, descubrí que en las últimas líneas modificaba el puerto en el cual se
+		proporcionaba dicho servicio, lo que me sirvió también como idea para instalar los 3 servicios
+		en una misma máquina virtual.
+		
+		En concreto, el puerto al que se reubica la página http es el $"$28080$"$.
 
-		Suponiendo que hubiésemos solucionado este error, una vez seguido las instrucciones de
-		\cite{WF_install}, para iniciar o apagar el servicio, disponemos de \textit{service
-		wildfly start} para iniciar y \textit{service wildfly stop} para apagarlo(a diferencia
-		de Tomcat, para el cuál tuvimos que crear los alias).
+		Como prueba del correcto funcionamiento del servicio WildFly en la máquina servidor, dejo una
+		captura en la figura \ref{fig:WF_Success}:
+			
+			\begin{figure}[h!]
+				\includegraphics[width=15cm]{Success_WF.png}
+				\caption{Inicialización del servicio WildFly y comprobación de su correcto funcionamiento.}
+				\label{fig:WF_Success}
+			\end{figure}
+
+		Una vez solucionado este error, disponemos de \textit{service wildfly start} para iniciar y
+		\textit{service wildfly stop} para apagarlo(a diferencia de nuestro anterior candidato Tomcat,
+		para el cual tuvimos que crear los alias).
 
 \section{GlassFish}
 
@@ -373,29 +400,37 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 		Una vez descargado el archivo comprimido de \cite{GF_download}, selecionamos la carpeta
 		donde queremos ubicar el programa y lo descomprimimos.
 		
-		Acabada la instalación, basta con dar comienzo con el comando asadmin a un dominio para
-		empezar a funcionar(análogamente, se procedería para apagar el servicio).
+		Por defecto, GlassFish genera un dominio llamado $"$domain1$"$ con valores por defecto
+		como que el puerto para servicio http sea $"$8080$"$(que en este caso, a diferencia de
+		los casos anteriores, dejaremos como está) y para el administrador en el puerto $"$4848$"$.
 		
-		En este proceso, la instalación se realizó de forma exitosa pero como podemos ver en la
-		figura \ref{fig:GF_Fail}, cuando intentamos dar comienzo al servicio, nos produce un
-		error que no he logrado subsanar haciendo, por tanto, imposible la comparativa de los
-		servicios.
+		También podemos crear nosotros otro dominio haciendo uso del comando asadmin seguida de
+		\textit{create-domain} y los comandos correspondientes como bien se explica en \cite{GF_create}.
+		
+		De forma muy similar, se pueden eliminar dominios con \textit{delete-domain} \cite{GF_delete}
+		o consultar los ya existentes con \textit{list-domain} \cite{GF_list}.
+		
+		En GlassFish, usaremos el comando \textit{asadmin} seguido de \textit{start-domain}
+		\cite{GF_start} para iniciar, \textit{stop-domain} \cite{GF_stop} para parar o
+		\textit{restart-domain} \cite{GF_restart} para reiniciar seguidos cada uno del nombre de
+		algún dominio creado previamente(por defecto, se tomará \textit{domain1}), además de los
+		correspondientes parámetros que se estimen oportunos.
+		
+		Como podemos ver en la figura \ref{fig:GF_Success}, el servicio fue inicializado de forma
+		correcta\footnote{Nótese que en la versión entregada para la convocatoria de junio, se
+		producía un error al iniciar el dominio por defecto. Bastó con borrar todo lo que había
+		instalado y reinstalar para subsanarlo.}.
 
 		\begin{figure}[h!]
-			\includegraphics[width=15cm]{Fail_GF.png}
-			\caption{Error al iniciar el servicio de GlassFish.}
-			\label{fig:GF_Fail}
+			\includegraphics[width=15cm]{Success_GF.png}
+			\caption{Inicialización del servicio GlassFish y comprobación de su correcto funcionamiento.}
+			\label{fig:GF_Success}
 		\end{figure}
-
-		Suponiendo que hubiésemos solucionado este error, en GlassFish usaremos el comando
-		\textit{asadmin} con los parámetros \textit{start-domain}, \textit{stop-domain} o
-		\textit{restart-domain} seguidos del nombre de algún dominio creado previamente
-		para iniciarlo, pararlo o reiniciarlo, respectivamente.
 
 \section{Comparación de resultados}
 	La realización de esta comparativa está inspirada en las tesis de:
 		\begin{itemize}
-			\item John Jairo Mendez Romero\cite{JJMR_Tesis}, de la cuál tomé el código de
+			\item John Jairo Mendez Romero\cite{JJMR_Tesis}, de la cual tomé el código de
 			ejecución en los servidores de aplicaciones.
 			
 			\item Diego Paul Tamayo Barriga\cite{DPTB_Tesis}, de ella surgió la idea de utilizar
@@ -404,14 +439,22 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 			permitió investigarlo y utilizarlo.
 		\end{itemize}
 
-	Para realizar la medición de resultados de los diferentes servidores de aplicaciones(de haber
-	sido posible su instalación de manera exitosa), se iba a utilizar 4 máquinas virtuales para
-	interpretar los roles de cliente y cada uno de los servidores.
+	Para realizar la medición de resultados de los diferentes servidores de aplicaciones, se
+	utilizarán 2 máquinas virtuales para interpretar los roles de cliente y de servidor(ésta, con
+	los 3 tipos de servidores).
 	
-	En cada máquina servidor, se configura la aplicación correspondiente de entre nuestras 3 
-	candidatas: Tomcat, WildFly y GlassFish. Una vez configuradas con algún código de ejecución
-	simple, se procede a pausar dos de las máquinas servidoras para que no afecten a la ejecución
-	y medición de la tercera.
+	Dado que en la máquina servidor, se configuran las 3 aplicaciones de entre nuestras 3 
+	candidatas: Tomcat, WildFly y GlassFish, para evitar problemas con la memoria caché de navegador,
+	daremos un puerto distinto a cada candidata(idea surgida de un comentario en la página donde encontré
+	el script para instalar WildFly\cite{WF_solution}).
+	
+	Por el script utilizado para instalar WildFly, en el que ya habían definido que apareciera en el
+	puerto 28080, lo he respetado. Para Tomcat, he utilizado el puerto 18080(que se modifica tal y como se
+	indica en \cite{TC_StackOverFlow} sustituyendo $"$80$"$ por $"$18080$"$). Y para GlassFish, he dejado
+	el puerto original(8080).
+
+	Una vez configuradas con un código de ejecución	simple, se procede a pausar 2 de los 3 candidatas
+	para que no afecten a la ejecución y medición de la otra.
 	
 	Desde la máquina cliente, hacemos una petición al servidor web activo haciendo uso del comando
 	\textit{ab} del paquete \textit{apache2-utils} que, tal como se nos indica en su página
@@ -421,33 +464,44 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	Para esta prueba, se utilizarán los parámetros:
 	\begin{itemize}
 		\item \textit{-b} que ajusta el tamaño del buffer de envío/recepción TCP. Le daremos un rango
-		de valores variando entre 1 y 100(En concreto, se usarán 1, 10 y 100).
+		de valores variando entre 1 y 100(En concreto, se usan 1, 10 y 100).
 		\item \textit{-c} que determina cuántas peticiones se pueden lanzar a la vez. Para este parámetro,
-		usaremos los valores 1(por defecto), 2 y 5.
+		usamos los valores 1(por defecto), 2 y 5.
 		\item \textit{-n} que determina cuántas peticiones al servidor se realizarán. En este proyecto,
-		le daremos los valores 10, 50 y 100.
+		le damos los valores 10, 50 y 100.
 	\end{itemize}
 	
 	Esto supone un total de 27 ejecuciones por cada servidor, haciendo un total de 81.
 	
-	Tras cada ejecución del comando \textit{ab} con sus correspondientes parámetros, se ejecutarán
+	Tras cada ejecución del comando \textit{ab} con sus correspondientes parámetros, se ejecuta
 	en la máquina virtual servidor sobre la que se ha ejecutado otro comando de benchmarking llamado
 	\textit{sar} del paquete \textit{sysstat}.
 	
-	Dicho comando permite una serie de comandos que nos
-	permiten conocer diferentes aspectos sobre los que usar benchmarking, como podemos ver en su página
-	oficial\cite{SAR_official}.
+	Dicho comando, permite una serie de parámetros que nos permiten conocer diferentes aspectos sobre
+	los que usar benchmarking, como podemos ver en su página oficial\cite{SAR_official}.
 	
-	Para esta prueba, se utilizarán los parámetros:
+	Para esta prueba, se han utilizado los parámetros:
 	\begin{itemize}
 		\item \textit{-r} que muestra el estado de utilización de la memoria RAM.
 		\item \textit{-u} que muestra el estado de utilización de la CPU.
 	\end{itemize}
 	
-	Después, realizaríamos un estudio de los datos del cuál se sacaría qué aplicación nos produce
-	una productividad más rápida a menor consumo de CPU y RAM. También podríamos ver qué aplicación
-	es más adecuada para un servidor que dé más importancia a la CPU que a la RAM o viceversa.
-
+	Después, a partir de los datos obtenidos\footnote{Véase el Apéndice \ref{sec: Datos}}, se realiza
+	un estudio\footnote{Véase el Apéndice \ref{sec: Comparativa}} del cual sacamos que:
+	\begin{itemize}
+		\item En términos de tiempo, con una confianza del 99\%, el servicio más rápido es GlassFish, y
+		Tomcat y WildFly no se pueden diferenciar ni siquiera con una confianza del 90\%.
+		\item En términos de CPU, con una confianza del 95\%\footnote{Con una confianza del 99\%,
+		no podemos diferenciar a Tomcat y a GlassFish}, el servicio con menor consumo de CPU es GlassFish,
+		y Tomcat y WildFly no se pueden diferenciar ni siquiera con una confianza del 90\%.
+		\item En términos de RAM, con una confianza del 90\%\footnote{A 95\% de confianza, todos los
+		servicios son indistinguibles}, sólo podemos afirmar que WildFly consume más RAM que GlassFish.
+		\item Teniendo en cuenta los anteriores resultados, el servicio con mejor relación entre tiempo
+		de respuesta y consumo de recursos sería GlassFish ya que tiene el tiempo de respuesta más rápido,
+		el menor consumo de CPU y es indistinguible respecto a los otros servicios respecto al consumo
+		de RAM.
+	\end{itemize} 
+	
 \section{Perspectivas futuras}
 	Para futuros trabajos, se podría comparar dichos servidores de aplicaciones con otras herramientas
 	de las usadas en este documento para compararlos. Así como realizar la comparativa entre otro
@@ -461,7 +515,7 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	podríamos realizar una comparativo no sólo a nivel individual de servidores de aplicaciones, si
 	no a nivel más general, comparando así las plataformas sobre las que se desarrollan.
 	
-
+	
 \newpage
 \begin{thebibliography}{10}
 	\expandafter\ifx\csname url\endcsname\relax
@@ -533,6 +587,10 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	\textbf{Apache Tomcat}\\
 		\url{http://tomcat.apache.org/download-70.cgi}
 
+	\bibitem{TC_StackOverFlow}
+	\textbf{Stack Overflow}
+		\url{http://stackoverflow.com/questions/4756039/how-to-change-the-port-of-tomcat-from-8080-to-80}
+
 	\bibitem{TC_config}
 	\textbf{\textit{Tomcat The Definitive Guide}}\\
 	Jason Bittain \& Ian F. Darwin\\
@@ -542,8 +600,10 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	
 	\bibitem{WF_official}
 	\textbf{JBossDeveloper}\\
-		\url{http://jbossas.jboss.org/}\\
-		\url{http://wildfly.org/}
+		\url{http://wildfly.org/}\\
+		\url{http://jbossas.jboss.org/}\footnote{Al parecer, esta página ha dejado de estar disponible,
+		luego éste y el siguiente enlace ya no están operativos.}\\
+		
 	
 	\bibitem{WF_vote}
 	\textbf{JBossDeveloper}\\
@@ -565,6 +625,12 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	\textbf{JBossDeveloper}\\
 		\url{http://wildfly.org/downloads/}
 	
+	\bibitem{WF_solution}
+	\textbf{Dmitriy Sukharev. IT Blog}\\
+		\url{http://sukharevd.net/wildfly-8-installation.html}
+		\url{https://gist.github.com/sukharevd/6087988}
+		
+	
 	\bibitem{GF_official}
 	\textbf{GlassFish}\\
 		\url{https://glassfish.java.net/}
@@ -580,6 +646,30 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 	\textbf{GlassFish}\\
 		\url{https://glassfish.java.net/download.html}
 	
+	\bibitem{GF_create}
+	\textbf{Oracle}\\
+		\url{http://docs.oracle.com/cd/E19798-01/821-1758/create-domain-1/index.html}
+
+	\bibitem{GF_delete}
+	\textbf{Oracle}\\
+		\url{http://docs.oracle.com/cd/E19798-01/821-1758/delete-domain-1/index.html}
+
+	\bibitem{GF_list}
+	\textbf{Oracle}\\
+		\url{http://docs.oracle.com/cd/E19798-01/821-1758/list-domains-1/index.html}
+
+	\bibitem{GF_start}
+	\textbf{Oracle}\\
+		\url{http://docs.oracle.com/cd/E19798-01/821-1758/start-domain-1/index.html}
+
+	\bibitem{GF_stop}
+	\textbf{Oracle}\\
+		\url{http://docs.oracle.com/cd/E19798-01/821-1758/stop-domain-1/index.html}
+
+	\bibitem{GF_restart}
+	\textbf{Oracle}\\
+		\url{http://docs.oracle.com/cd/E19798-01/821-1758/restart-domain-1/index.html}
+
 	\bibitem{JJMR_Tesis}
 	\textbf{\textit{Análisis comparativo de las plataformas J2EE y .NET aplicado
 	al desarrollo de servicios web}}\\
@@ -605,4 +695,145 @@ Análisis comparativo de Tomcat, WildFly y GlassFish} % Subtitle
 		\url{http://sebastien.godard.pagesperso-orange.fr/man_sar.html}
 \end{thebibliography}
 
+\appendix
+\section{Datos}
+	\label{sec: Datos}
+	%% Generado con un script
+	\subsection{AB}
+		\subsubsection{Tomcat}
+			\lstinputlisting{./Datos/TC_1_1_10.txt}
+			\lstinputlisting{./Datos/TC_1_1_50.txt}
+			\lstinputlisting{./Datos/TC_1_1_100.txt}
+			\lstinputlisting{./Datos/TC_1_2_10.txt}
+			\lstinputlisting{./Datos/TC_1_2_50.txt}
+			\lstinputlisting{./Datos/TC_1_2_100.txt}
+			\lstinputlisting{./Datos/TC_1_5_10.txt}
+			\lstinputlisting{./Datos/TC_1_5_50.txt}
+			\lstinputlisting{./Datos/TC_1_5_100.txt}
+			\lstinputlisting{./Datos/TC_10_1_10.txt}
+			\lstinputlisting{./Datos/TC_10_1_50.txt}
+			\lstinputlisting{./Datos/TC_10_1_100.txt}
+			\lstinputlisting{./Datos/TC_10_2_10.txt}
+			\lstinputlisting{./Datos/TC_10_2_50.txt}
+			\lstinputlisting{./Datos/TC_10_2_100.txt}
+			\lstinputlisting{./Datos/TC_10_5_10.txt}
+			\lstinputlisting{./Datos/TC_10_5_50.txt}
+			\lstinputlisting{./Datos/TC_10_5_100.txt}
+			\lstinputlisting{./Datos/TC_100_1_10.txt}
+			\lstinputlisting{./Datos/TC_100_1_50.txt}
+			\lstinputlisting{./Datos/TC_100_1_100.txt}
+			\lstinputlisting{./Datos/TC_100_2_10.txt}
+			\lstinputlisting{./Datos/TC_100_2_50.txt}
+			\lstinputlisting{./Datos/TC_100_2_100.txt}
+			\lstinputlisting{./Datos/TC_100_5_10.txt}
+			\lstinputlisting{./Datos/TC_100_5_50.txt}
+			\lstinputlisting{./Datos/TC_100_5_100.txt}
+		
+		\subsubsection{WildFly}
+			\lstinputlisting{./Datos/WF_1_1_10.txt}
+			\lstinputlisting{./Datos/WF_1_1_50.txt}
+			\lstinputlisting{./Datos/WF_1_1_100.txt}
+			\lstinputlisting{./Datos/WF_1_2_10.txt}
+			\lstinputlisting{./Datos/WF_1_2_50.txt}
+			\lstinputlisting{./Datos/WF_1_2_100.txt}
+			\lstinputlisting{./Datos/WF_1_5_10.txt}
+			\lstinputlisting{./Datos/WF_1_5_50.txt}
+			\lstinputlisting{./Datos/WF_1_5_100.txt}
+			\lstinputlisting{./Datos/WF_10_1_10.txt}
+			\lstinputlisting{./Datos/WF_10_1_50.txt}
+			\lstinputlisting{./Datos/WF_10_1_100.txt}
+			\lstinputlisting{./Datos/WF_10_2_10.txt}
+			\lstinputlisting{./Datos/WF_10_2_50.txt}
+			\lstinputlisting{./Datos/WF_10_2_100.txt}
+			\lstinputlisting{./Datos/WF_10_5_10.txt}
+			\lstinputlisting{./Datos/WF_10_5_50.txt}
+			\lstinputlisting{./Datos/WF_10_5_100.txt}
+			\lstinputlisting{./Datos/WF_100_1_10.txt}
+			\lstinputlisting{./Datos/WF_100_1_50.txt}
+			\lstinputlisting{./Datos/WF_100_1_100.txt}
+			\lstinputlisting{./Datos/WF_100_2_10.txt}
+			\lstinputlisting{./Datos/WF_100_2_50.txt}
+			\lstinputlisting{./Datos/WF_100_2_100.txt}
+			\lstinputlisting{./Datos/WF_100_5_10.txt}
+			\lstinputlisting{./Datos/WF_100_5_50.txt}
+			\lstinputlisting{./Datos/WF_100_5_100.txt}
+		
+		\subsubsection{GlassFish}
+			\lstinputlisting{./Datos/GF_1_1_10.txt}
+			\lstinputlisting{./Datos/GF_1_1_50.txt}
+			\lstinputlisting{./Datos/GF_1_1_100.txt}
+			\lstinputlisting{./Datos/GF_1_2_10.txt}
+			\lstinputlisting{./Datos/GF_1_2_50.txt}
+			\lstinputlisting{./Datos/GF_1_2_100.txt}
+			\lstinputlisting{./Datos/GF_1_5_10.txt}
+			\lstinputlisting{./Datos/GF_1_5_50.txt}
+			\lstinputlisting{./Datos/GF_1_5_100.txt}
+			\lstinputlisting{./Datos/GF_10_1_10.txt}
+			\lstinputlisting{./Datos/GF_10_1_50.txt}
+			\lstinputlisting{./Datos/GF_10_1_100.txt}
+			\lstinputlisting{./Datos/GF_10_2_10.txt}
+			\lstinputlisting{./Datos/GF_10_2_50.txt}
+			\lstinputlisting{./Datos/GF_10_2_100.txt}
+			\lstinputlisting{./Datos/GF_10_5_10.txt}
+			\lstinputlisting{./Datos/GF_10_5_50.txt}
+			\lstinputlisting{./Datos/GF_10_5_100.txt}
+			\lstinputlisting{./Datos/GF_100_1_10.txt}
+			\lstinputlisting{./Datos/GF_100_1_50.txt}
+			\lstinputlisting{./Datos/GF_100_1_100.txt}
+			\lstinputlisting{./Datos/GF_100_2_10.txt}
+			\lstinputlisting{./Datos/GF_100_2_50.txt}
+			\lstinputlisting{./Datos/GF_100_2_100.txt}
+			\lstinputlisting{./Datos/GF_100_5_10.txt}
+			\lstinputlisting{./Datos/GF_100_5_50.txt}
+			\lstinputlisting{./Datos/GF_100_5_100.txt}
+
+	\subsection{SAR}
+		Dado que SAR registra cambios cada 5 minutos\footnote{y no se puede modificar o yo, al menos,
+		no encontré cómo hacerlo.}, se ha tomado una medición recién iniciado el sistema y una cada
+		vez que se ejecutaba el comando ab con parámetros \textit{-b} y \textit{-c} distintos, es decir,
+		cada vez que se ejecutaban 3 veces el comando ab variando el valor del parámetro \textit{-n}.
+	
+		\subsubsection{RAM}\footnote{Nótese que he reducido el tamaño de letra para permitir la lectura
+		del archivo plano como si se tratase de una tabla.}
+			\lstset{basicstyle=\scriptsize}
+			\lstinputlisting{./Datos/sar_r.txt}
+	
+		\subsubsection{CPU}
+			\lstset{basicstyle=\footnotesize}
+			\lstinputlisting{./Datos/sar_u.txt}
+
+
+\section{Comparativa}
+	En la figura \ref{fig:Comp_t}\footnote{Dado que no he sabido exportar directamente el archivo .ods,
+	he optado por tomar 3 capturas de pantalla.}, podemos ver la tabla con los resultados de la ejecución
+	del benchmark \textit{ab}, así como los cálculos para comprobar si con cierto nivel de confianza,
+	los servicios podemos considerarlos diferentes o no.
+	
+	\label{sec: Comparativa}
+	\begin{figure}[h!]
+		\includegraphics[width=15cm]{Comparativa_tiempo.png}
+		\caption{Comparativa del tiempo de respuesta.}
+		\label{fig:Comp_t}
+	\end{figure}
+	
+	En la figura \ref{fig:Comp_CPU}, podemos ver la tabla con los resultados de la ejecución del benchmark
+	\textit{sar} con parámetro \textit{-u}, así como los cálculos para comprobar si con cierto nivel de
+	confianza, los servicios podemos considerarlos diferentes o no.
+		
+	\begin{figure}[h!]
+		\includegraphics[width=15cm]{Comparativa_CPU.png}
+		\caption{Comparativa del uso de la CPU.}
+		\label{fig:Comp_CPU}
+	\end{figure}
+	
+	En la figura \ref{fig:Comp_RAM}, podemos ver la tabla con los resultados de la ejecución del benchmark
+	\textit{sar} con parámetro \textit{-r}, así como los cálculos para comprobar si con cierto nivel de
+	confianza, los servicios podemos considerarlos diferentes o no.
+
+	\begin{figure}[h!]
+		\includegraphics[width=15cm]{Comparativa_RAM.png}
+		\caption{Comparativa del uso de la memoria RAM.}
+		\label{fig:Comp_RAM}
+	\end{figure}
+	
 \end{document}
