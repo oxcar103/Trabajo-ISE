@@ -1,0 +1,43 @@
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.103 (be patient).....done
+
+
+Server Software:        WildFly/8
+Server Hostname:        192.168.1.103
+Server Port:            28080
+
+Document Length:        178 bytes
+
+Concurrency Level:      2
+Time taken for tests:   16.211 seconds
+Complete requests:      50
+Failed requests:        0
+Write errors:           0
+Non-2xx responses:      50
+Total transferred:      21850 bytes
+HTML transferred:       8900 bytes
+Requests per second:    3.08 [#/sec] (mean)
+Time per request:       648.439 [ms] (mean)
+Time per request:       324.219 [ms] (mean, across all concurrent requests)
+Transfer rate:          1.32 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       93  107   4.2    107     115
+Processing:   107  532  63.8    541     607
+Waiting:       98  109   5.0    108     130
+Total:        213  639  64.8    649     711
+
+Percentage of the requests served within a certain time (ms)
+  50%    649
+  66%    655
+  75%    661
+  80%    664
+  90%    676
+  95%    681
+  98%    711
+  99%    711
+ 100%    711 (longest request)

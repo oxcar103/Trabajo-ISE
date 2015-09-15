@@ -1,0 +1,43 @@
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.103 (be patient).....done
+
+
+Server Software:        GlassFish
+Server Hostname:        192.168.1.103
+Server Port:            8080
+
+Document Length:        256 bytes
+
+Concurrency Level:      1
+Time taken for tests:   16.397 seconds
+Complete requests:      50
+Failed requests:        0
+Write errors:           0
+Non-2xx responses:      50
+Total transferred:      24186 bytes
+HTML transferred:       12793 bytes
+Requests per second:    3.05 [#/sec] (mean)
+Time per request:       327.931 [ms] (mean)
+Time per request:       327.931 [ms] (mean, across all concurrent requests)
+Transfer rate:          1.44 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       67   71   2.9     72      77
+Processing:    69  257 170.3    404     430
+Waiting:       68   73   2.8     73      78
+Total:        137  328 169.7    472     507
+
+Percentage of the requests served within a certain time (ms)
+  50%    472
+  66%    476
+  75%    483
+  80%    488
+  90%    492
+  95%    493
+  98%    507
+  99%    507
+ 100%    507 (longest request)
