@@ -190,7 +190,7 @@ Apache Tomcat, WildFly y GlassFish} % The short title appears at the bottom of e
 
 \section{Comparación}
 	\begin{frame}
-		\frametitle{Tomcat}
+		\frametitle{Medidas}
 		
 		Ahora queda realizar las medidas a cada servidor con los comandos \textit{ab} y \textit{sar}:
 		
@@ -205,22 +205,44 @@ Apache Tomcat, WildFly y GlassFish} % The short title appears at the bottom of e
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Fracaso...}
-		
-		Desgraciadamente, no he logrado instalar bien los otros dos programas...
-		
-		\pause
-		
-		\begin{figure}
-			\includegraphics[width=8cm]{Fail_WF.png}
-		\end{figure}
-		
-		\pause
-		
-		Así que la comparativa no ha sido posible.
-		
+		\frametitle{Resultados}
+	
+		\only<1>{Se agrupan los resultados en tablas y se calcula qué servicio es mejor en términos de...}
+
+		\only<2>{\begin{figure}
+			Tiempo:
+			
+			\includegraphics[width=10cm]{Comparativa_tiempo.png}
+		\end{figure}}
+
+		\only<3>{\begin{figure}
+			Uso de CPU:
+			
+			\includegraphics[width=10cm]{Comparativa_CPU.png}
+		\end{figure}}
+
+		\only<4>{\begin{figure}
+			Uso de RAM:
+			
+			\includegraphics[width=13cm]{Comparativa_RAM.png}
+		\end{figure}}
+	
 	\end{frame}
 
+	\begin{frame}
+		\frametitle{Conclusiones}
+		
+		Y se obtienen las siguientes concluciones:
+		
+		\begin{itemize}
+			\item En términos de tiempo, con una confianza del 99\%, el servicio más rápido es GlassFish, y
+			Tomcat y WildFly no se pueden diferenciar.
+			\item En términos de CPU, con una confianza del 95\%, el servicio con menor consumo de CPU es GlassFish,
+			y Tomcat y WildFly no se pueden diferenciar.
+			\item En términos de RAM, con una confianza del 90\%, sólo podemos afirmar que WildFly consume más RAM que GlassFish.
+			\item Por tanto, el servicio con mejor relación entre tiempo de respuesta y consumo de recursos sería GlassFish.
+		\end{itemize} 
+	\end{frame}
 
 \section{Referencias}
 	% Bibliografía
